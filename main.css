@@ -1,0 +1,158 @@
+/* general settings */
+
+* {
+  /* outline: 1px solid darkred; */ /* debug */
+  border: none;
+  margin: 0px;
+}
+
+body {
+   background-color: White;
+   font-family: Sans-Serif, Arial;
+   font-size: 1.0em;
+   color: #454545;
+   margin: 1em;
+}
+
+p {
+   margin-top: 0.3em;
+   margin-bottom: 0.3em;
+}
+
+hr {
+   background: #ddd;
+   height: 1px;
+}
+
+a {
+   color: rgb(0, 127, 253);
+   text-decoration: none;
+}
+
+table {
+   width: 100%;
+}
+
+th {
+   font-size: 0.8em;
+   color: #aaa;
+}
+
+blockquote {
+   border-left: 3px solid #e9e9e9;
+   margin-left: 6px;
+   padding-left: 6px;
+}
+
+pre code {
+    max-height: 40em;
+    overflow: auto;
+    background-color: #f9f9f9;
+    word-wrap: normal;
+    display: block;
+    white-space: pre;
+    overflow: auto;
+}
+
+video {
+   width: 100%;
+}
+
+img {
+   border: 1px solid #e9e9e9;
+}
+
+/* individual settings */
+
+table.meta_data_table {
+   background: #f9f9f9;
+   margin-top: 0.5em;
+   margin-bottom: 0.5em;
+}
+table.meta_data_table th {
+   text-align: left;
+}
+
+table.post_data_table {
+   width: 100%;
+   table-layout: fixed;
+   font-size: 1.0em;
+}
+table.post_data_table tr td:first-child {
+ width: 40px;
+}
+
+table.post_data_header {
+   table-layout: fixed;
+   font-size: 0.8em;
+   color: #aaa;
+}
+table.post_data_header tr td:first-child {
+   width: 50%;
+}
+
+aside.quote {
+   border: 1px solid #e9e9e9;
+   background: #f9f9f9;
+}
+
+div.title img {
+   border-radius: 10%;
+}
+
+div.meta {
+   display: none;
+}
+
+div.poll {
+   background-color: White;
+   padding: 4px 4px;
+   border-style: solid;
+   border-width: 2px;
+   border-color: LightGray;
+   margin-bottom: 0.3em;
+}
+
+.avatar {
+   margin-top: 0.3em;
+   text-align: top;
+   vertical-align: top;
+}
+
+.avatar img {
+   border-radius: 10%;
+}
+
+img.emoji {
+   vertical-align: middle;
+   width: auto;
+   height: 1.0em;
+}
+
+aside.onebox, div.md-table {
+   background-color: White;
+   padding: 4px 4px;
+   border-style: solid;
+   border-width: 2px;
+   border-color: LightGray;
+   margin-bottom: 0.3em;
+}
+
+header.source {
+   border-left: 5px solid #e9e9e9;
+}
+
+header.source img {
+   height: 30px;
+   width: auto;
+}
+
+article img {
+   height: 70px;
+   width: auto;
+   float: left;
+}
+
+div.md-table tr:nth-child(even) {
+  background-color: #f2f2f2;
+}

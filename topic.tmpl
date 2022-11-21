@@ -1,0 +1,142 @@
+{{/* -----------------------------------------------------------
+Purpose:
+- shows topic data (meta, posts) as compact HTML page
+
+Description:
+- NN
+
+Releases:
+- v1.0.0 - 2022/11/21: initial release
+
+Author:
+- NN
+
+Remarks:
+- Basic table design for each post entry:
+  ┌──────┬────────────────────────────────────┐
+  │      │  ┌──────────────┬───────────────┐  │
+  │      │  └──────────────┴───────────────┘  │
+  │      │                                    │
+  │      │                                    │
+  │      │                                    │
+  │      │                                    │
+  └──────┴────────────────────────────────────┘
+----------------------------------------------------------- */}}
+
+{{/* configuration */}}
+{{ $data := (index . 0  0) }}
+{{ $forum := (index . 0  1) }}
+
+{{/* content  */}}
+{{ $json := readJSON $data }}
+{{ $forumURL := printf "https://%s" $forum }}
+
+<!doctype html>
+<head>
+   <meta charset='utf-8'>
+   <title>{{ $json.meta_data.id }}</title>
+   <link rel='stylesheet' href='./main.css'>
+</head>
+<body>
+   <main>
+
+      {{/* ---------- meta data ---------- */}}
+      <base href="{{ $forumURL }}" />
+      <h2>{{ $json.meta_data.title }}</h2>
+      <hr>
+      
+      <table class="meta_data_table">
+         <tr>
+            <th>Forum</th>
+            <th>Created</th>
+            <th>Solution</th>
+            <th>Category</th>
+            <th>Topic</th>
+            <th>Posts</th>
+            <th>Words</th>
+            <th>Reading Time</th>
+            <th>Views</th>
+            <th>Users</th>
+            <th>Likes</th>
+            <th>Links</th>
+         </tr>
+         <tr>
+            <td>{{ $forum }}</td>
+            {{ $date := substr 0 10 $json.meta_data.created_at }}
+            {{ $time := substr 11 16 $json.meta_data.created_at }}
+            <td>{{ $date }} / {{ $time }}</td>
+            <td>
+               {{ if $json.meta_data.accepted_answer }} # {{ $json.meta_data.accepted_answer.post_number }} {{ end }}
+            </td>
+            <td>{{ $json.meta_data.category_id }}</td>
+            <td>{{ $json.meta_data.id }}</td>
+            <td>{{ $json.meta_data.posts_count }}</td>
+            <td>{{ $json.meta_data.word_count }}</td>
+            <td>{{ add1 (div $json.meta_data.word_count 200) }} min</td>
+            <td>{{ $json.meta_data.views }}</td>
+            <td>{{ $json.meta_data.participant_count }}</td>
+            <td>{{ $json.meta_data.like_count }}</td>
+            <td>{{ if $json.meta_data.details.links }}{{ len $json.meta_data.details.links }}{{ end }}</td>
+         </tr>
+      </table>
+
+      <hr>
+
+      {{/* ---------- post data ---------- */}}
+      {{ range $json.post_data }}
+         {{ range .post_stream.posts }}
+            <table class="post_data_table">
+               <tr>
+                  {{ if .accepted_answer }} <td class="avatar" style="background-color:#C1FFC1;"> {{ else }} <td class="avatar"> {{ end }}
+                     {{ $imageURL := replace "{size}" "40" .avatar_template }}
+                     <img class="avatar" src="{{ $imageURL }}" alt="avatar-image">
+                  </td>
+                  <td>
+                     <table class="post_data_header">
+                        <tr>
+                           <td align=left>
+                              <b>{{ .username }}</b>
+                              {{ if .name }} / {{ .name }} {{ end }}
+                              {{ if .user_title }} / {{ .user_title }} {{ end }}
+                              {{ if .moderator }} / moderator {{ end }}
+                              {{ if .admin }} / admin {{ end }}
+                              {{ $likes := (index .actions_summary 0).count }}
+                              {{ if $likes }}
+                                 {{ if eq (int $likes) 1 }}
+                                    / {{ $likes }} like
+                                 {{ else }}
+                                   / {{ $likes }} likes
+                                 {{ end }}
+                              {{ end }}
+                              {{ if .reply_count }}
+                                 {{ if eq (int .reply_count) 1 }}
+                                   / {{ .reply_count }} reply
+                                 {{ else }}
+                                   / {{ .reply_count }} replies
+                                 {{ end }}
+                              {{ end }}
+                              {{ if .accepted_answer }} / accepted answer {{ end }}
+                              {{ if .action_code }} / <b style="color: red;">{{ .action_code }}</b> {{ end }}
+                           </td>
+
+                           {{ $date := substr 0 10 .created_at }}
+                           {{ $time := substr 11 16 .created_at }}
+                           {{ $updated := ne .created_at .updated_at }}
+                           <td align=right>
+                              <a href="/t/-/{{ $json.meta_data.id}}/{{ .post_number }}" target="_blank" rel="noopener noreferrer"># {{ .post_number }}</a>
+                              {{ if $updated }} / updated {{ end }}
+                              / {{ $date }} / {{ $time }}
+                           </td>
+                        </tr>
+                     </table>
+                     {{ toTypeHTML .cooked }}
+                  </td>
+               </tr>
+            </table>
+            <hr>
+         {{ end }}
+      {{ end }}
+
+   </main>
+</body>
+</html>
