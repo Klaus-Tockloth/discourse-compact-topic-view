@@ -7,6 +7,7 @@ Description:
 
 Releases:
 - v1.0.0 - 2022/11/21: initial release
+- v1.1.0 - 2022/11/22: reply_to* added to post header
 
 Author:
 - NN
@@ -116,7 +117,9 @@ Remarks:
                                  {{ end }}
                               {{ end }}
                               {{ if .accepted_answer }} / accepted answer {{ end }}
-                              {{ if .action_code }} / <b style="color: red;">{{ .action_code }}</b> {{ end }}
+                              {{ if .reply_to_post_number }} / (reply to # {{ .reply_to_post_number }}) {{ end }}
+                              {{ if .reply_to_user.username }} / (reply to {{ .reply_to_user.username }}) {{ end }}
+                              {{ if .action_code }} / <b style="color: red;">{{ .action_code }}</b> {{ end }}                              
                            </td>
 
                            {{ $date := substr 0 10 .created_at }}

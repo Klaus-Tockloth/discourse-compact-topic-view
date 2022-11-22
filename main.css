@@ -88,7 +88,7 @@ table.post_data_header {
    color: #aaa;
 }
 table.post_data_header tr td:first-child {
-   width: 50%;
+   width: 70%;
 }
 
 aside.quote {
@@ -114,7 +114,7 @@ div.poll {
 }
 
 .avatar {
-   margin-top: 0.3em;
+   margin-top: 0.15em;
    text-align: top;
    vertical-align: top;
 }
