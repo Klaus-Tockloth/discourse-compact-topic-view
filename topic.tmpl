@@ -117,8 +117,13 @@ Remarks:
                                  {{ end }}
                               {{ end }}
                               {{ if .accepted_answer }} / accepted answer {{ end }}
-                              {{ if .reply_to_post_number }} / (reply to # {{ .reply_to_post_number }}) {{ end }}
-                              {{ if .reply_to_user.username }} / (reply to {{ .reply_to_user.username }}) {{ end }}
+                              {{ if .reply_to_post_number }}
+                                 {{ if .reply_to_user.username }}
+                                    / ➚ {{ .reply_to_user.username }} #{{ .reply_to_post_number }}
+                                 {{ else }}
+                                    / ➚ #{{ .reply_to_post_number }}
+                                 {{ end }}
+                              {{ end }}
                               {{ if .action_code }} / <b style="color: red;">{{ .action_code }}</b> {{ end }}                              
                            </td>
 
@@ -126,7 +131,7 @@ Remarks:
                            {{ $time := substr 11 16 .created_at }}
                            {{ $updated := ne .created_at .updated_at }}
                            <td align=right>
-                              <a href="/t/-/{{ $json.meta_data.id}}/{{ .post_number }}" target="_blank" rel="noopener noreferrer"># {{ .post_number }}</a>
+                              <a href="/t/-/{{ $json.meta_data.id}}/{{ .post_number }}" target="_blank" rel="noopener noreferrer">#{{ .post_number }}</a>
                               {{ if $updated }} / updated {{ end }}
                               / {{ $date }} / {{ $time }}
                            </td>
