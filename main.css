@@ -4,6 +4,7 @@
   /* outline: 1px solid darkred; */ /* debug */
   border: none;
   margin: 0px;
+  overflow-wrap: break-word;
 }
 
 body {
@@ -54,6 +55,12 @@ pre code {
     overflow: auto;
 }
 
+pre code ol {
+   margin: 0;
+   line-height: 0.5em;
+   list-style-type: decimal;
+}
+    
 video {
    width: 100%;
 }
@@ -121,6 +128,8 @@ div.poll {
 
 .avatar img {
    border-radius: 10%;
+   height: 40px;
+   width: auto;
 }
 
 img.emoji {
