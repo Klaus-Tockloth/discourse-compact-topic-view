@@ -8,6 +8,7 @@ Description:
 Releases:
 - v1.0.0 - 2022/11/21: initial release
 - v1.1.0 - 2022/11/22: reply_to* added to post header
+- v1.2.0 - 2022/11/25: reactions added to post header, tags added to meta data
 
 Author:
 - NN
@@ -44,6 +45,7 @@ Remarks:
       {{/* ---------- meta data ---------- */}}
       <base href="{{ $forumURL }}" />
       <h2>{{ $json.meta_data.title }}</h2>
+      <p>{{ if $json.meta_data.tags }} {{ $json.meta_data.tags | join ", " }} {{ end }}</p>
       <hr>
       
       <table class="meta_data_table">
@@ -67,7 +69,7 @@ Remarks:
             {{ $time := substr 11 16 $json.meta_data.created_at }}
             <td>{{ $date }} / {{ $time }}</td>
             <td>
-               {{ if $json.meta_data.accepted_answer }} # {{ $json.meta_data.accepted_answer.post_number }} {{ end }}
+               {{ if $json.meta_data.accepted_answer }} #{{ $json.meta_data.accepted_answer.post_number }} {{ end }}
             </td>
             <td>{{ $json.meta_data.category_id }}</td>
             <td>{{ $json.meta_data.id }}</td>
@@ -109,6 +111,18 @@ Remarks:
                                    / {{ $likes }} likes
                                  {{ end }}
                               {{ end }}
+                              {{/* begin experimental */}}
+                              {{ if .reaction_users_count }}
+                                 {{ $reactions := sub .reaction_users_count $likes }}
+                                 {{ if $reactions }}
+                                    {{ if eq (int $reactions) 1 }}
+                                       / {{ $reactions }} react
+                                    {{ else }}
+                                      / {{ $reactions }} reacts
+                                    {{ end }}
+                                 {{ end }}
+                              {{ end }}
+                              {{/* end experimental */}}
                               {{ if .reply_count }}
                                  {{ if eq (int .reply_count) 1 }}
                                    / {{ .reply_count }} reply
